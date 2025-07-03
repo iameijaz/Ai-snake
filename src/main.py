@@ -54,7 +54,8 @@ def solve(mesh, times, creep=True):
     for step in range(1, len(times)):
         dt = times[step] - times[step - 1]
         F_ext = np.zeros(n_nodes)
-        F_ext[-1] = external_force(times[step])
+        # load applied at the interface node (between segments)
+        F_ext[1] = external_force(times[step])
         u_iter = u[:, step - 1].copy()
         for _ in range(50):
             K = np.zeros((n_nodes, n_nodes))
